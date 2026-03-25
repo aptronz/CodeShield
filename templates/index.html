@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeShield - AI Plagiarism Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <main class="container">
+      <header class="hero">
+        <div class="brand-row">
+          <h1>CodeShield</h1>
+          <span class="pill">AI Powered</span>
+        </div>
+        <p>Modern plagiarism detection for single code submissions</p>
+      </header>
+
+      <div class="grid-layout">
+        <section class="card">
+          <h2>Check One Code Submission</h2>
+          <label for="language">Language</label>
+          <select id="language">
+            <option value="auto">Auto Detect</option>
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+
+          <label for="codeInput">Paste code</label>
+          <textarea id="codeInput" rows="14" placeholder="Paste your code here..."></textarea>
+
+          <button id="detectBtn">Detect Plagiarism</button>
+        </section>
+
+        <section class="card result" id="resultCard">
+          <h2>Detection Result</h2>
+          <div id="resultContent">Submit code to view result.</div>
+        </section>
+      </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
