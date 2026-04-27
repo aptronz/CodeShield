@@ -126,7 +126,7 @@ def _language_pattern_boost(code, language):
     return 0.0
 
 
-def detect_plagiarism(code, language="python"):
+def detect_plagiarism(code, language="python", ai_reference_code=None):
     language = _language_or_default(language)
     if language == "auto":
         language = _auto_detect_language(code)
@@ -146,6 +146,15 @@ def detect_plagiarism(code, language="python"):
             best_score = score
         compared += 1
 
+    ai_score = None
+    if ai_reference_code and ai_reference_code.strip():
+        ai_tokens = tokenize(ai_reference_code, language)
+        ai_structure = extract_structure(ai_tokens)
+        ai_score = combined_similarity(user_tokens, ai_tokens, user_structure, ai_structure)
+        if ai_score > best_score:
+            best_score = ai_score
+        compared += 1
+
     tuned_score = _clamp(best_score + _template_boost(code) + _language_pattern_boost(code, language), 0.0, 1.0)
     percentage = int(_clamp(tuned_score * 100.0, 0.0, 100.0))
     threshold = _threshold_for_language(language, len(user_tokens))
@@ -157,5 +166,7 @@ def detect_plagiarism(code, language="python"):
         "verdict": verdict,
         "is_plagiarized": is_plagiarized,
         "ai_similarity_score": percentage,
+        "ai_reference_similarity_score": int(_clamp((ai_score or 0.0) * 100.0, 0.0, 100.0)),
+        "used_generated_solution": bool(ai_reference_code and ai_reference_code.strip()),
         "references_compared": compared,
     }

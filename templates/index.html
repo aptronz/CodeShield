@@ -21,6 +21,13 @@
       <div class="grid-layout">
         <section class="card">
           <h2>Check One Code Submission</h2>
+          <label for="problemStatement">Problem statement</label>
+          <textarea
+            id="problemStatement"
+            rows="6"
+            placeholder="Paste the coding problem statement here..."
+          ></textarea>
+
           <label for="language">Language</label>
           <select id="language">
             <option value="auto">Auto Detect</option>
@@ -39,6 +46,7 @@
         <section class="card result" id="resultCard">
           <h2>Detection Result</h2>
           <div id="resultContent">Submit code to view result.</div>
+          <div id="generatedSolutionBox" class="generated-solution hidden"></div>
         </section>
       </div>
     </main>
